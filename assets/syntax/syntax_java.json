@@ -1,0 +1,8 @@
+{
+  "language": "java",
+  "displayName": "Java",
+  "extensions": [".java"],
+  "keywords": ["abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue", "default", "do", "double", "else", "enum", "extends", "final", "finally", "float", "for", "goto", "if", "implements", "import", "instanceof", "int", "interface", "long", "native", "new", "package", "private", "protected", "public", "return", "short", "static", "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while", "true", "false", "null", "sealed", "non-sealed", "permits", "record", "var", "yield"],
+  "types": ["boolean", "byte", "char", "short", "int", "long", "float", "double", "void", "String", "Integer", "Long", "Double", "Float", "Boolean", "Object", "Class", "List", "ArrayList", "LinkedList", "Set", "HashSet", "Map", "HashMap", "Optional", "Stream"],
+  "builtIns": ["System.out.println", "System.out.print", "System.exit", "String.valueOf", "Integer.parseInt", "Long.parseLong", "Double.parseDouble", "Math.abs", "Math.sqrt", "Math.pow", "Math.min", "Math.max", "Arrays.sort", "Arrays.asList", "List.of", "Set.of", "Map.of"]
+}

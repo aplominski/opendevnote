@@ -1,0 +1,8 @@
+{
+  "language": "dart",
+  "displayName": "Dart",
+  "extensions": [".dart"],
+  "keywords": ["abstract", "as", "assert", "async", "await", "break", "case", "catch", "class", "const", "continue", "covariant", "default", "deferred", "do", "dynamic", "else", "enum", "export", "extends", "extension", "external", "factory", "false", "final", "finally", "for", "Function", "get", "hide", "if", "implements", "import", "in", "interface", "is", "late", "library", "mixin", "new", "null", "on", "operator", "part", "required", "rethrow", "return", "sealed", "set", "show", "static", "super", "switch", "sync", "this", "throw", "true", "try", "typedef", "var", "void", "when", "while", "with", "yield"],
+  "types": ["int", "double", "num", "bool", "String", "void", "dynamic", "Object", "List", "Set", "Map", "Iterable", "Stream", "Future", "Duration", "DateTime", "Function", "Type", "Uri", "RegExp"],
+  "builtIns": ["print", "identical", "hashCode", "runtimeType", "toString", "main", "runZoned"]
+}

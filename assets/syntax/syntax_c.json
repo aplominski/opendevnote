@@ -1,0 +1,8 @@
+{
+  "language": "c",
+  "displayName": "C",
+  "extensions": [".c", ".h"],
+  "keywords": ["auto", "break", "case", "char", "const", "continue", "default", "do", "double", "else", "enum", "extern", "float", "for", "goto", "if", "inline", "int", "long", "register", "restrict", "return", "short", "signed", "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while"],
+  "types": ["int", "char", "float", "double", "void", "long", "short", "signed", "unsigned", "size_t", "ptrdiff_t", "uint8_t", "uint16_t", "uint32_t", "uint64_t", "int8_t", "int16_t", "int32_t", "int64_t", "bool"],
+  "builtIns": ["printf", "scanf", "malloc", "free", "sizeof", "memcpy", "memset", "strcmp", "strlen", "fopen", "fclose", "exit", "assert"]
+}
