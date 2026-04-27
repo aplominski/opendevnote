@@ -11,7 +11,9 @@ import 'package:opendevnote/screens/dialogs/add_todo_dialog.dart';
 import 'package:opendevnote/theme/app_colors.dart';
 
 class AppSidebar extends ConsumerWidget {
-  const AppSidebar({super.key});
+  final VoidCallback? onNavigate;
+
+  const AppSidebar({super.key, this.onNavigate});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,44 +26,47 @@ class AppSidebar extends ConsumerWidget {
     final unplannedTodos = ref.watch(inboxTodosProvider);
     final l10n = AppLocalizations.of(context)!;
 
-    return Container(
-      width: 220,
-      decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(
-            color: colorScheme.outlineVariant.withValues(alpha: 0.5),
-            width: 0.5,
+    return SafeArea(
+      child: Container(
+        width: 280,
+        decoration: BoxDecoration(
+          border: Border(
+            right: BorderSide(
+              color: colorScheme.outlineVariant.withValues(alpha: 0.5),
+              width: 0.5,
+            ),
           ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 12),
-          _SidebarItem(
-            icon: Icons.today_outlined,
-            label: l10n.navigationToday,
-            count: todayTodos.length,
-            isSelected: navSection == NavSection.today,
-            onTap: () {
-              ref.read(navSectionProvider.notifier).state = NavSection.today;
-              ref.read(selectedProjectIdProvider.notifier).state = null;
-              ref.read(selectedSnippetIdProvider.notifier).state = null;
-              ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
-            },
-          ),
-          _SidebarItem(
-            icon: Icons.inbox_outlined,
-            label: l10n.navigationInbox,
-            count: unplannedTodos.length,
-            isSelected: navSection == NavSection.inbox,
-            onTap: () {
-              ref.read(navSectionProvider.notifier).state = NavSection.inbox;
-              ref.read(selectedProjectIdProvider.notifier).state = null;
-              ref.read(selectedSnippetIdProvider.notifier).state = null;
-              ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
-            },
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 4),
+        _SidebarItem(
+          icon: Icons.today_outlined,
+          label: l10n.navigationToday,
+          count: todayTodos.length,
+          isSelected: navSection == NavSection.today,
+          onTap: () {
+            ref.read(navSectionProvider.notifier).state = NavSection.today;
+            ref.read(selectedProjectIdProvider.notifier).state = null;
+            ref.read(selectedSnippetIdProvider.notifier).state = null;
+            ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
+            onNavigate?.call();
+          },
+        ),
+        _SidebarItem(
+          icon: Icons.inbox_outlined,
+          label: l10n.navigationInbox,
+          count: unplannedTodos.length,
+          isSelected: navSection == NavSection.inbox,
+          onTap: () {
+            ref.read(navSectionProvider.notifier).state = NavSection.inbox;
+            ref.read(selectedProjectIdProvider.notifier).state = null;
+            ref.read(selectedSnippetIdProvider.notifier).state = null;
+            ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
+            onNavigate?.call();
+          },
+        ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Divider(
@@ -69,51 +74,55 @@ class AppSidebar extends ConsumerWidget {
               color: colorScheme.outlineVariant.withValues(alpha: 0.5),
             ),
           ),
-          _SidebarItem(
-            icon: Icons.calendar_today_outlined,
-            label: l10n.navigationCalendar,
-            isSelected: navSection == NavSection.calendar,
-            onTap: () {
-              ref.read(navSectionProvider.notifier).state = NavSection.calendar;
-              ref.read(selectedProjectIdProvider.notifier).state = null;
-              ref.read(selectedSnippetIdProvider.notifier).state = null;
-              ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
-            },
-          ),
-          _SidebarItem(
-            icon: Icons.calculate_outlined,
-            label: l10n.navigationCalculator,
-            isSelected: navSection == NavSection.calculator,
-            onTap: () {
-              ref.read(navSectionProvider.notifier).state =
-                  NavSection.calculator;
-              ref.read(selectedProjectIdProvider.notifier).state = null;
-              ref.read(selectedSnippetIdProvider.notifier).state = null;
-              ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
-            },
-          ),
-          _SidebarItem(
-            icon: Icons.timer_outlined,
-            label: l10n.navigationWorkTime,
-            isSelected: navSection == NavSection.workTime,
-            onTap: () {
-              ref.read(navSectionProvider.notifier).state = NavSection.workTime;
-              ref.read(selectedProjectIdProvider.notifier).state = null;
-              ref.read(selectedSnippetIdProvider.notifier).state = null;
-              ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
-            },
-          ),
-          _SidebarItem(
-            icon: Icons.rss_feed_outlined,
-            label: l10n.navigationNews,
-            isSelected: navSection == NavSection.news,
-            onTap: () {
-              ref.read(navSectionProvider.notifier).state = NavSection.news;
-              ref.read(selectedProjectIdProvider.notifier).state = null;
-              ref.read(selectedSnippetIdProvider.notifier).state = null;
-              ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
-            },
-          ),
+        _SidebarItem(
+          icon: Icons.calendar_today_outlined,
+          label: l10n.navigationCalendar,
+          isSelected: navSection == NavSection.calendar,
+          onTap: () {
+            ref.read(navSectionProvider.notifier).state = NavSection.calendar;
+            ref.read(selectedProjectIdProvider.notifier).state = null;
+            ref.read(selectedSnippetIdProvider.notifier).state = null;
+            ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
+            onNavigate?.call();
+          },
+        ),
+        _SidebarItem(
+          icon: Icons.calculate_outlined,
+          label: l10n.navigationCalculator,
+          isSelected: navSection == NavSection.calculator,
+          onTap: () {
+            ref.read(navSectionProvider.notifier).state =
+                NavSection.calculator;
+            ref.read(selectedProjectIdProvider.notifier).state = null;
+            ref.read(selectedSnippetIdProvider.notifier).state = null;
+            ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
+            onNavigate?.call();
+          },
+        ),
+        _SidebarItem(
+          icon: Icons.timer_outlined,
+          label: l10n.navigationWorkTime,
+          isSelected: navSection == NavSection.workTime,
+          onTap: () {
+            ref.read(navSectionProvider.notifier).state = NavSection.workTime;
+            ref.read(selectedProjectIdProvider.notifier).state = null;
+            ref.read(selectedSnippetIdProvider.notifier).state = null;
+            ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
+            onNavigate?.call();
+          },
+        ),
+        _SidebarItem(
+          icon: Icons.rss_feed_outlined,
+          label: l10n.navigationNews,
+          isSelected: navSection == NavSection.news,
+          onTap: () {
+            ref.read(navSectionProvider.notifier).state = NavSection.news;
+            ref.read(selectedProjectIdProvider.notifier).state = null;
+            ref.read(selectedSnippetIdProvider.notifier).state = null;
+            ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
+            onNavigate?.call();
+          },
+        ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Divider(
@@ -121,30 +130,32 @@ class AppSidebar extends ConsumerWidget {
               color: colorScheme.outlineVariant.withValues(alpha: 0.5),
             ),
           ),
-          _SidebarItem(
-            icon: Icons.source_outlined,
-            label: l10n.navigationRepos,
-            isSelected: navSection == NavSection.repositories,
-            onTap: () {
-              ref.read(navSectionProvider.notifier).state =
-                  NavSection.repositories;
-              ref.read(selectedProjectIdProvider.notifier).state = null;
-              ref.read(selectedSnippetIdProvider.notifier).state = null;
-              ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
-            },
-          ),
-          _SidebarItem(
-            icon: Icons.rocket_launch_outlined,
-            label: 'CI/CD Workflows',
-            isSelected: navSection == NavSection.workflows,
-            onTap: () {
-              ref.read(navSectionProvider.notifier).state =
-                  NavSection.workflows;
-              ref.read(selectedProjectIdProvider.notifier).state = null;
-              ref.read(selectedSnippetIdProvider.notifier).state = null;
-              ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
-            },
-          ),
+        _SidebarItem(
+          icon: Icons.source_outlined,
+          label: l10n.navigationRepos,
+          isSelected: navSection == NavSection.repositories,
+          onTap: () {
+            ref.read(navSectionProvider.notifier).state =
+                NavSection.repositories;
+            ref.read(selectedProjectIdProvider.notifier).state = null;
+            ref.read(selectedSnippetIdProvider.notifier).state = null;
+            ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
+            onNavigate?.call();
+          },
+        ),
+        _SidebarItem(
+          icon: Icons.rocket_launch_outlined,
+          label: 'CI/CD Workflows',
+          isSelected: navSection == NavSection.workflows,
+          onTap: () {
+            ref.read(navSectionProvider.notifier).state =
+                NavSection.workflows;
+            ref.read(selectedProjectIdProvider.notifier).state = null;
+            ref.read(selectedSnippetIdProvider.notifier).state = null;
+            ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
+            onNavigate?.call();
+          },
+        ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Divider(
@@ -173,24 +184,25 @@ class AppSidebar extends ConsumerWidget {
                 final stats = ref.watch(projectStatsProvider(project.id));
                 final total = stats['total']!;
                 final completed = stats['completed']!;
-                return _SidebarItem(
-                  icon: AppColors.getIcon(project.iconIndex),
-                  iconColor: AppColors.getColor(project.colorIndex),
-                  label: project.name,
-                  count: total - completed,
-                  isSelected:
-                      navSection == NavSection.projects &&
-                      selectedProjectId == project.id,
-                  onTap: () {
-                    ref.read(navSectionProvider.notifier).state =
-                        NavSection.projects;
-                    ref.read(selectedProjectIdProvider.notifier).state =
-                        project.id;
-                    ref.read(selectedSnippetIdProvider.notifier).state = null;
-                    ref.read(selectedSnippetProjectIdProvider.notifier).state =
-                        null;
-                  },
-                );
+              return _SidebarItem(
+                icon: AppColors.getIcon(project.iconIndex),
+                iconColor: AppColors.getColor(project.colorIndex),
+                label: project.name,
+                count: total - completed,
+                isSelected:
+                    navSection == NavSection.projects &&
+                    selectedProjectId == project.id,
+                onTap: () {
+                  ref.read(navSectionProvider.notifier).state =
+                      NavSection.projects;
+                  ref.read(selectedProjectIdProvider.notifier).state =
+                      project.id;
+                  ref.read(selectedSnippetIdProvider.notifier).state = null;
+                  ref.read(selectedSnippetProjectIdProvider.notifier).state =
+                      null;
+                  onNavigate?.call();
+                },
+              );
               },
             ),
           ),
@@ -250,19 +262,21 @@ class AppSidebar extends ConsumerWidget {
             },
           ),
           const Divider(height: 1, indent: 16, endIndent: 16),
-          _SidebarItem(
-            icon: Icons.settings_outlined,
-            label: l10n.tooltipSettings,
-            isSelected: navSection == NavSection.settings,
-            onTap: () {
-              ref.read(navSectionProvider.notifier).state = NavSection.settings;
-              ref.read(selectedProjectIdProvider.notifier).state = null;
-              ref.read(selectedSnippetIdProvider.notifier).state = null;
-              ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
-            },
-          ),
+        _SidebarItem(
+          icon: Icons.settings_outlined,
+          label: l10n.tooltipSettings,
+          isSelected: navSection == NavSection.settings,
+          onTap: () {
+            ref.read(navSectionProvider.notifier).state = NavSection.settings;
+            ref.read(selectedProjectIdProvider.notifier).state = null;
+            ref.read(selectedSnippetIdProvider.notifier).state = null;
+            ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
+            onNavigate?.call();
+          },
+        ),
           const SizedBox(height: 8),
         ],
+        ),
       ),
     );
   }

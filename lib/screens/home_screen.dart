@@ -66,7 +66,7 @@ class HomeScreen extends ConsumerWidget {
   }
 }
 
-class _HomeScreenWithShortcuts extends ConsumerWidget {
+class _HomeScreenWithShortcuts extends ConsumerStatefulWidget {
   final bool isWide;
   final NavSection navSection;
   final String? selectedProjectId;
@@ -80,14 +80,27 @@ class _HomeScreenWithShortcuts extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_HomeScreenWithShortcuts> createState() =>
+      _HomeScreenWithShortcutsState();
+}
+
+class _HomeScreenWithShortcutsState
+    extends ConsumerState<_HomeScreenWithShortcuts> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  Widget build(BuildContext context) {
+    final isWide = widget.isWide;
+    final navSection = widget.navSection;
+    final selectedProjectId = widget.selectedProjectId;
+
     return CallbackShortcuts(
       bindings: {
-        const SingleActivator(LogicalKeyboardKey.keyN, control: true): () {
+const SingleActivator(LogicalKeyboardKey.keyN, control: true): () {
           if (selectedProjectId != null) {
             showDialog(
               context: context,
-              builder: (_) => AddNoteDialog(projectId: selectedProjectId!),
+              builder: (_) => AddNoteDialog(projectId: selectedProjectId),
             );
           }
         },
@@ -95,7 +108,7 @@ class _HomeScreenWithShortcuts extends ConsumerWidget {
           if (selectedProjectId != null) {
             showDialog(
               context: context,
-              builder: (_) => AddTodoDialog(projectId: selectedProjectId!),
+              builder: (_) => AddTodoDialog(projectId: selectedProjectId),
             );
           }
         },
@@ -120,6 +133,25 @@ class _HomeScreenWithShortcuts extends ConsumerWidget {
       child: Focus(
         autofocus: true,
         child: Scaffold(
+          key: _scaffoldKey,
+          drawer: isWide
+              ? null
+              : Drawer(
+                  width: 280,
+                  child: AppSidebar(
+                    onNavigate: () =>
+                        Navigator.of(context).pop(),
+                  ),
+                ),
+          appBar: isWide
+              ? null
+              : AppBar(
+                  leading: IconButton(
+                    icon: const Icon(Icons.menu),
+                    onPressed: () =>
+                        _scaffoldKey.currentState?.openDrawer(),
+                  ),
+                ),
           body: isWide
               ? Row(
                   children: [
@@ -127,9 +159,8 @@ class _HomeScreenWithShortcuts extends ConsumerWidget {
                     Expanded(child: _ContentArea()),
                   ],
                 )
-              : _ContentArea(),
-          bottomNavigationBar: isWide ? null : const _MobileBottomNav(),
-          floatingActionButton: showFab
+              : SafeArea(child: _ContentArea()),
+          floatingActionButton: widget.showFab
               ? FloatingActionButton.small(
                   onPressed: () {
                     showDialog(
@@ -143,56 +174,6 @@ class _HomeScreenWithShortcuts extends ConsumerWidget {
               : null,
         ),
       ),
-    );
-  }
-}
-
-class _MobileBottomNav extends ConsumerWidget {
-  const _MobileBottomNav();
-
-  static const _sections = [
-    NavSection.today,
-    NavSection.inbox,
-    NavSection.projects,
-  ];
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
-    final navSection = ref.watch(navSectionProvider);
-    final colorScheme = Theme.of(context).colorScheme;
-    final selectedIndex = _sections.indexOf(navSection).clamp(0, 2);
-
-    return NavigationBar(
-      height: 56,
-      backgroundColor: colorScheme.surface,
-      indicatorColor: colorScheme.primaryContainer,
-      selectedIndex: selectedIndex,
-      onDestinationSelected: (index) {
-        ref.read(navSectionProvider.notifier).state = _sections[index];
-        if (index != 2) {
-          ref.read(selectedProjectIdProvider.notifier).state = null;
-        }
-        ref.read(selectedSnippetIdProvider.notifier).state = null;
-        ref.read(selectedSnippetProjectIdProvider.notifier).state = null;
-      },
-      destinations: [
-        NavigationDestination(
-          icon: const Icon(Icons.today_outlined, size: 20),
-          selectedIcon: const Icon(Icons.today, size: 20),
-          label: l10n.navigationToday,
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.inbox_outlined, size: 20),
-          selectedIcon: const Icon(Icons.inbox, size: 20),
-          label: l10n.navigationInbox,
-        ),
-        NavigationDestination(
-          icon: const Icon(Icons.folder_outlined, size: 20),
-          selectedIcon: const Icon(Icons.folder, size: 20),
-          label: l10n.navigationProjects,
-        ),
-      ],
     );
   }
 }

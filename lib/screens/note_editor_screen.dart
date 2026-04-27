@@ -19,6 +19,7 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
   late TextEditingController _contentController;
   bool _showPreview = true;
   String _previewContent = '';
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   Timer? _previewTimer;
   Timer? _saveTimer;
@@ -63,114 +64,134 @@ class _NoteEditorScreenState extends ConsumerState<NoteEditorScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     final isWide = MediaQuery.of(context).size.width > 700;
 
-    Widget body = Row(
+    Widget editorPanel = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                right: _showPreview
-                    ? BorderSide(color: colorScheme.outlineVariant)
-                    : BorderSide.none,
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    'Edytor',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: _contentController,
-                    maxLines: null,
-                    expands: true,
-                    textAlignVertical: TextAlignVertical.top,
-                    decoration: const InputDecoration(
-                      hintText: 'Wprowadź treść w formacie Markdown...',
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.all(16),
-                    ),
-                    style: const TextStyle(fontFamily: 'monospace'),
-                    onChanged: (_) => _onContentChanged(),
-                  ),
-                ),
-              ],
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(
+            'Edytor',
+            style: textTheme.titleSmall?.copyWith(
+              color: colorScheme.onSurfaceVariant,
             ),
           ),
         ),
-        if (_showPreview)
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    'Podgląd',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Markdown(
-                    data: _previewContent,
-                    selectable: true,
-                    padding: const EdgeInsets.all(16),
-                    styleSheet: MarkdownStyleSheet(
-                      h1: Theme.of(context).textTheme.headlineLarge,
-                      h2: Theme.of(context).textTheme.headlineMedium,
-                      h3: Theme.of(context).textTheme.headlineSmall,
-                      h4: Theme.of(context).textTheme.titleLarge,
-                      h5: Theme.of(context).textTheme.titleMedium,
-                      h6: Theme.of(context).textTheme.titleSmall,
-                      p: Theme.of(context).textTheme.bodyMedium,
-                      code: TextStyle(
-                        backgroundColor: colorScheme.surfaceContainerHighest,
-                        fontFamily: 'monospace',
-                      ),
-                      codeblockDecoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerHighest,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      blockquoteDecoration: BoxDecoration(
-                        border: Border(
-                          left: BorderSide(
-                            color: colorScheme.primary,
-                            width: 4,
-                          ),
-                        ),
-                      ),
-                      listBullet: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                  ),
-                ),
-              ],
+        Expanded(
+          child: TextField(
+            controller: _contentController,
+            maxLines: null,
+            expands: true,
+            textAlignVertical: TextAlignVertical.top,
+            decoration: const InputDecoration(
+              hintText: 'Wprowadź treść w formacie Markdown...',
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.all(16),
             ),
+            style: const TextStyle(fontFamily: 'monospace'),
+            onChanged: (_) => _onContentChanged(),
           ),
+        ),
       ],
     );
 
+    Widget previewPanel = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(
+            'Podgląd',
+            style: textTheme.titleSmall?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ),
+        Expanded(
+          child: Markdown(
+            data: _previewContent,
+            selectable: true,
+            padding: const EdgeInsets.all(16),
+            styleSheet: MarkdownStyleSheet(
+              h1: textTheme.headlineLarge,
+              h2: textTheme.headlineMedium,
+              h3: textTheme.headlineSmall,
+              h4: textTheme.titleLarge,
+              h5: textTheme.titleMedium,
+              h6: textTheme.titleSmall,
+              p: textTheme.bodyMedium,
+              code: TextStyle(
+                backgroundColor: colorScheme.surfaceContainerHighest,
+                fontFamily: 'monospace',
+              ),
+              codeblockDecoration: BoxDecoration(
+                color: colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              blockquoteDecoration: BoxDecoration(
+                border: Border(
+                  left: BorderSide(
+                    color: colorScheme.primary,
+                    width: 4,
+                  ),
+                ),
+              ),
+              listBullet: textTheme.bodyMedium,
+            ),
+          ),
+        ),
+      ],
+    );
+
+    Widget body;
     if (isWide) {
       body = Row(
         children: [
           const AppSidebar(),
-          Expanded(child: body),
+          Expanded(
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        right: _showPreview
+                            ? BorderSide(color: colorScheme.outlineVariant)
+                            : BorderSide.none,
+                      ),
+                    ),
+                    child: editorPanel,
+                  ),
+                ),
+                if (_showPreview) Expanded(child: previewPanel),
+              ],
+            ),
+          ),
         ],
       );
+    } else {
+      body = _showPreview ? previewPanel : editorPanel;
+      body = SafeArea(child: body);
     }
 
     return Scaffold(
+      key: _scaffoldKey,
+      drawer: isWide
+          ? null
+          : Drawer(
+              width: 280,
+              child: const AppSidebar(),
+            ),
       appBar: AppBar(
+        leading: isWide
+            ? null
+            : IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+              ),
+        automaticallyImplyLeading: isWide ? true : false,
         title: Text(widget.note.title),
         actions: [
           if (_hasUnsavedChanges)

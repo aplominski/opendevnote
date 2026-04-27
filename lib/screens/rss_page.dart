@@ -43,10 +43,14 @@ class _SplitView extends ConsumerWidget {
           onTap: [null, null],
         ),
         Expanded(
-          child: Row(
-            children: [
-              SizedBox(
-                width: 200,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final isWide = constraints.maxWidth > 500;
+              return Row(
+              children: [
+                if (isWide)
+                SizedBox(
+                  width: 200,
                 child: Column(
                   children: [
                     _FeedListItem(
@@ -126,12 +130,15 @@ class _SplitView extends ConsumerWidget {
                   ],
                 ),
               ),
-              VerticalDivider(
-                width: 0.5,
-                color: colorScheme.outlineVariant.withValues(alpha: 0.5),
-              ),
-              Expanded(child: _ArticlesList(feedId: selectedFeedId)),
-            ],
+                if (isWide)
+                VerticalDivider(
+                  width: 0.5,
+                  color: colorScheme.outlineVariant.withValues(alpha: 0.5),
+                ),
+                Expanded(child: _ArticlesList(feedId: selectedFeedId)),
+              ],
+            );
+            },
           ),
         ),
       ],
