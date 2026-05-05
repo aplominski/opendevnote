@@ -44,6 +44,7 @@ enum NavSection {
   calendar,
   calculator,
   repositories,
+  issues,
   workflows,
   projects,
   workTime,

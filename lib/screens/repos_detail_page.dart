@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:opendevnote/models/gh_branch.dart';
 import 'package:opendevnote/models/gh_commit.dart';
+import 'package:opendevnote/models/gh_issue.dart';
 import 'package:opendevnote/models/gh_repo_stats.dart';
 import 'package:opendevnote/providers/repos_provider.dart';
+import 'package:opendevnote/providers/issues_provider.dart';
 import 'package:opendevnote/screens/dialogs/commit_detail_dialog.dart';
 import 'package:opendevnote/widgets/app_breadcrumb.dart';
 
@@ -20,6 +22,7 @@ class ReposDetailPage extends ConsumerStatefulWidget {
 class _ReposDetailPageState extends ConsumerState<ReposDetailPage> {
   bool _statsLoaded = false;
   bool _branchesLoaded = false;
+  bool _issuesLoaded = false;
 
   @override
   void initState() {
@@ -46,6 +49,7 @@ class _ReposDetailPageState extends ConsumerState<ReposDetailPage> {
     final commitsState = ref.watch(repoCommitsProvider(repoKey));
     final statsState = ref.watch(repoStatsProvider(repoKey));
     final branchesState = ref.watch(repoBranchesProvider(repoKey));
+    final issuesState = ref.watch(repoIssuesProvider(repoKey));
 
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollInfo) {
@@ -225,6 +229,59 @@ class _ReposDetailPageState extends ConsumerState<ReposDetailPage> {
               // Participation
               if (statsState.participation != null)
                 _ParticipationChart(data: statsState.participation!),
+            ],
+          ],
+          // ── Issues Section ──
+          _SectionHeader(
+            title: 'Issues',
+            onExpand: () {
+              if (!_issuesLoaded) {
+                ref.read(repoIssuesProvider(repoKey).notifier).loadFirst();
+                setState(() => _issuesLoaded = true);
+              }
+            },
+            isLoaded: _issuesLoaded,
+          ),
+          if (_issuesLoaded) ...[
+            if (issuesState.isLoading && issuesState.issues.isEmpty)
+              const Padding(
+                padding: EdgeInsets.all(24),
+                child: Center(child: CircularProgressIndicator()),
+              )
+            else if (issuesState.error != null && issuesState.issues.isEmpty)
+              Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  issuesState.error!,
+                  style: TextStyle(color: colorScheme.error),
+                ),
+              )
+            else if (issuesState.issues.isEmpty)
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text('Brak issues'),
+              )
+            else ...[
+              ...issuesState.issues
+                  .take(10)
+                  .map(
+                    (i) => _IssueTile(
+                      issue: i,
+                      onTap: () {
+                        ref.read(selectedIssueRepoProvider.notifier).state =
+                            repoKey;
+                        ref.read(selectedIssueNumberProvider.notifier).state =
+                            i.number;
+                      },
+                    ),
+                  ),
+              if (issuesState.isLoading)
+                const Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Center(
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                ),
             ],
           ],
           const SizedBox(height: 80),
@@ -496,6 +553,97 @@ class _BranchTile extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+// ── Issue Tile ──
+
+class _IssueTile extends StatelessWidget {
+  final GhIssue issue;
+  final VoidCallback onTap;
+
+  const _IssueTile({required this.issue, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: colorScheme.outlineVariant.withValues(alpha: 0.2),
+              width: 0.5,
+            ),
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              issue.state == 'open'
+                  ? Icons.error_outline
+                  : Icons.check_circle_outline,
+              size: 16,
+              color: issue.state == 'open' ? Colors.green : Colors.purple,
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    issue.title,
+                    style: textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 2),
+                  Row(
+                    children: [
+                      Text(
+                        '#${issue.number}',
+                        style: textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant.withValues(
+                            alpha: 0.6,
+                          ),
+                          fontSize: 11,
+                        ),
+                      ),
+                      if (issue.labels.isNotEmpty) ...[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: Text(
+                            issue.labels.first.name,
+                            style: textTheme.bodySmall?.copyWith(
+                              fontSize: 10,
+                              color: _parseLabelColor(issue.labels.first.color),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Color _parseLabelColor(String hex) {
+    try {
+      return Color(int.parse('FF$hex', radix: 16));
+    } catch (_) {
+      return Colors.grey;
+    }
   }
 }
 

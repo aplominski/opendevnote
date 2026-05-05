@@ -4,7 +4,7 @@ OpenDevNote is a **Flutter-based productivity application** designed for develop
 
 ## Features
 - **Notes & Code Snippets** – Create, edit, and tag notes or code fragments with markdown support and syntax highlighting.
-- **GitHub Integration** – View repositories, commits, and file diffs directly within the app.
+- **GitHub Integration** – View repositories, issues, commits, and file diffs directly within the app.
 - **RSS Reader** – Subscribe to technical feeds and read articles offline.
 - **Work Sessions & Time Tracking** – Log focused work periods and visualize them.
 - **Calculator & Graphs** – Perform calculations and plot results using `math_expressions` and `fl_chart`.

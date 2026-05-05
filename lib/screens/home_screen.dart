@@ -42,6 +42,9 @@ import 'package:opendevnote/screens/calculator_page.dart';
 import 'package:opendevnote/screens/work_time_page.dart';
 import 'package:opendevnote/screens/rss_page.dart';
 import 'package:opendevnote/screens/settings_page.dart';
+import 'package:opendevnote/screens/issues_page.dart';
+import 'package:opendevnote/screens/issue_detail_page.dart';
+import 'package:opendevnote/providers/issues_provider.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -96,7 +99,7 @@ class _HomeScreenWithShortcutsState
 
     return CallbackShortcuts(
       bindings: {
-const SingleActivator(LogicalKeyboardKey.keyN, control: true): () {
+        const SingleActivator(LogicalKeyboardKey.keyN, control: true): () {
           if (selectedProjectId != null) {
             showDialog(
               context: context,
@@ -139,8 +142,7 @@ const SingleActivator(LogicalKeyboardKey.keyN, control: true): () {
               : Drawer(
                   width: 280,
                   child: AppSidebar(
-                    onNavigate: () =>
-                        Navigator.of(context).pop(),
+                    onNavigate: () => Navigator.of(context).pop(),
                   ),
                 ),
           appBar: isWide
@@ -148,8 +150,7 @@ const SingleActivator(LogicalKeyboardKey.keyN, control: true): () {
               : AppBar(
                   leading: IconButton(
                     icon: const Icon(Icons.menu),
-                    onPressed: () =>
-                        _scaffoldKey.currentState?.openDrawer(),
+                    onPressed: () => _scaffoldKey.currentState?.openDrawer(),
                   ),
                 ),
           body: isWide
@@ -221,6 +222,16 @@ class _ContentArea extends ConsumerWidget {
           return const ReposDetailPage();
         }
         return const ReposPage();
+      case NavSection.issues:
+        final selectedIssueNumber = ref.watch(selectedIssueNumberProvider);
+        final selectedIssueRepo = ref.watch(selectedIssueRepoProvider);
+        if (selectedIssueNumber != null && selectedIssueRepo != null) {
+          return IssueDetailPage(
+            repoKey: selectedIssueRepo,
+            issueNumber: selectedIssueNumber,
+          );
+        }
+        return const IssuesPage();
       case NavSection.workflows:
         if (selectedWorkflowRepo != null) {
           return const WorkflowRepoDetailPage();

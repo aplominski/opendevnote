@@ -1053,4 +1053,73 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get calcModeInterval => 'Przedział';
+
+  @override
+  String get navigationIssues => 'Issues';
+
+  @override
+  String get labelIssues => 'Issues';
+
+  @override
+  String get labelComments => 'Komentarze';
+
+  @override
+  String get labelLabels => 'Etykiety';
+
+  @override
+  String get labelAssignees => 'Przypisani';
+
+  @override
+  String get labelMilestone => 'Kamień milowy';
+
+  @override
+  String get labelReactions => 'Reakcje';
+
+  @override
+  String get labelBody => 'Treść';
+
+  @override
+  String get labelAuthor => 'Autor';
+
+  @override
+  String get emptyStateNoIssues => 'Brak issues';
+
+  @override
+  String get dialogNewIssue => 'Nowy issue';
+
+  @override
+  String get dialogEditIssue => 'Edytuj issue';
+
+  @override
+  String get placeholderIssueTitle => 'Tytuł issue...';
+
+  @override
+  String get placeholderIssueBody => 'Opisz issue...';
+
+  @override
+  String get placeholderEnterComment => 'Napisz komentarz...';
+
+  @override
+  String get placeholderLabels => 'Etykiety (oddzielone przecinkiem)...';
+
+  @override
+  String get buttonReopen => 'Otwórz ponownie';
+
+  @override
+  String get buttonCloseIssue => 'Zamknij issue';
+
+  @override
+  String get buttonComment => 'Skomentuj';
+
+  @override
+  String get buttonOpenOnGitHub => 'Otwórz na GitHub';
+
+  @override
+  String get tooltipNewIssue => 'Nowy issue';
+
+  @override
+  String get statusOpen => 'Otwarty';
+
+  @override
+  String get statusClosed => 'Zamknięty';
 }

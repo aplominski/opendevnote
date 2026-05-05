@@ -2107,6 +2107,144 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Przedział'**
   String get calcModeInterval;
+
+  /// No description provided for @navigationIssues.
+  ///
+  /// In pl, this message translates to:
+  /// **'Issues'**
+  String get navigationIssues;
+
+  /// No description provided for @labelIssues.
+  ///
+  /// In pl, this message translates to:
+  /// **'Issues'**
+  String get labelIssues;
+
+  /// No description provided for @labelComments.
+  ///
+  /// In pl, this message translates to:
+  /// **'Komentarze'**
+  String get labelComments;
+
+  /// No description provided for @labelLabels.
+  ///
+  /// In pl, this message translates to:
+  /// **'Etykiety'**
+  String get labelLabels;
+
+  /// No description provided for @labelAssignees.
+  ///
+  /// In pl, this message translates to:
+  /// **'Przypisani'**
+  String get labelAssignees;
+
+  /// No description provided for @labelMilestone.
+  ///
+  /// In pl, this message translates to:
+  /// **'Kamień milowy'**
+  String get labelMilestone;
+
+  /// No description provided for @labelReactions.
+  ///
+  /// In pl, this message translates to:
+  /// **'Reakcje'**
+  String get labelReactions;
+
+  /// No description provided for @labelBody.
+  ///
+  /// In pl, this message translates to:
+  /// **'Treść'**
+  String get labelBody;
+
+  /// No description provided for @labelAuthor.
+  ///
+  /// In pl, this message translates to:
+  /// **'Autor'**
+  String get labelAuthor;
+
+  /// No description provided for @emptyStateNoIssues.
+  ///
+  /// In pl, this message translates to:
+  /// **'Brak issues'**
+  String get emptyStateNoIssues;
+
+  /// No description provided for @dialogNewIssue.
+  ///
+  /// In pl, this message translates to:
+  /// **'Nowy issue'**
+  String get dialogNewIssue;
+
+  /// No description provided for @dialogEditIssue.
+  ///
+  /// In pl, this message translates to:
+  /// **'Edytuj issue'**
+  String get dialogEditIssue;
+
+  /// No description provided for @placeholderIssueTitle.
+  ///
+  /// In pl, this message translates to:
+  /// **'Tytuł issue...'**
+  String get placeholderIssueTitle;
+
+  /// No description provided for @placeholderIssueBody.
+  ///
+  /// In pl, this message translates to:
+  /// **'Opisz issue...'**
+  String get placeholderIssueBody;
+
+  /// No description provided for @placeholderEnterComment.
+  ///
+  /// In pl, this message translates to:
+  /// **'Napisz komentarz...'**
+  String get placeholderEnterComment;
+
+  /// No description provided for @placeholderLabels.
+  ///
+  /// In pl, this message translates to:
+  /// **'Etykiety (oddzielone przecinkiem)...'**
+  String get placeholderLabels;
+
+  /// No description provided for @buttonReopen.
+  ///
+  /// In pl, this message translates to:
+  /// **'Otwórz ponownie'**
+  String get buttonReopen;
+
+  /// No description provided for @buttonCloseIssue.
+  ///
+  /// In pl, this message translates to:
+  /// **'Zamknij issue'**
+  String get buttonCloseIssue;
+
+  /// No description provided for @buttonComment.
+  ///
+  /// In pl, this message translates to:
+  /// **'Skomentuj'**
+  String get buttonComment;
+
+  /// No description provided for @buttonOpenOnGitHub.
+  ///
+  /// In pl, this message translates to:
+  /// **'Otwórz na GitHub'**
+  String get buttonOpenOnGitHub;
+
+  /// No description provided for @tooltipNewIssue.
+  ///
+  /// In pl, this message translates to:
+  /// **'Nowy issue'**
+  String get tooltipNewIssue;
+
+  /// No description provided for @statusOpen.
+  ///
+  /// In pl, this message translates to:
+  /// **'Otwarty'**
+  String get statusOpen;
+
+  /// No description provided for @statusClosed.
+  ///
+  /// In pl, this message translates to:
+  /// **'Zamknięty'**
+  String get statusClosed;
 }
 
 class _AppLocalizationsDelegate
