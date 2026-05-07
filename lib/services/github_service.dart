@@ -5,6 +5,7 @@ import 'package:opendevnote/models/gh_commit.dart';
 import 'package:opendevnote/models/gh_commit_detail.dart';
 import 'package:opendevnote/models/gh_issue.dart';
 import 'package:opendevnote/models/gh_issue_comment.dart';
+import 'package:opendevnote/models/gh_pull_request.dart';
 import 'package:opendevnote/models/gh_repo.dart';
 import 'package:opendevnote/models/gh_repo_stats.dart';
 import 'package:opendevnote/models/workflow_job.dart';
@@ -423,6 +424,151 @@ class GithubService {
     }
     throw GithubApiException(
       'Błąd dodawania komentarza: ${response.statusCode}',
+      response.statusCode,
+    );
+  }
+
+  // ── Pull Requests ──
+
+  Future<List<GhPullRequest>> getPullRequests({
+    required String owner,
+    required String repo,
+    required String token,
+    String state = 'open',
+    int page = 1,
+    String sort = 'created',
+    String direction = 'desc',
+  }) async {
+    final uri = Uri.parse('$_baseUrl/repos/$owner/$repo/pulls').replace(
+      queryParameters: {
+        'state': state,
+        'per_page': '30',
+        'page': '$page',
+        'sort': sort,
+        'direction': direction,
+      },
+    );
+
+    final response = await http.get(uri, headers: _headers(token));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as List<dynamic>;
+      return data
+          .map((pr) => GhPullRequest.fromJson(pr as Map<String, dynamic>))
+          .toList();
+    }
+    throw GithubApiException(
+      'Błąd ładowania pull requests: ${response.statusCode}',
+      response.statusCode,
+    );
+  }
+
+  Future<GhPullRequest> getPullRequest({
+    required String owner,
+    required String repo,
+    required int number,
+    required String token,
+  }) async {
+    final uri = Uri.parse('$_baseUrl/repos/$owner/$repo/pulls/$number');
+    final response = await http.get(uri, headers: _headers(token));
+    if (response.statusCode == 200) {
+      return GhPullRequest.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    }
+    throw GithubApiException(
+      'Błąd ładowania pull request: ${response.statusCode}',
+      response.statusCode,
+    );
+  }
+
+  Future<GhPullRequest> createPullRequest({
+    required String owner,
+    required String repo,
+    required String token,
+    required String title,
+    String? body,
+    required String head,
+    required String base,
+    bool draft = false,
+  }) async {
+    final uri = Uri.parse('$_baseUrl/repos/$owner/$repo/pulls');
+    final bodyMap = <String, dynamic>{
+      'title': title,
+      'head': head,
+      'base': base,
+      if (body != null) 'body': body,
+      'draft': draft,
+    };
+    final response = await http.post(
+      uri,
+      headers: _headers(token),
+      body: jsonEncode(bodyMap),
+    );
+    if (response.statusCode == 201) {
+      return GhPullRequest.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    }
+    throw GithubApiException(
+      'Błąd tworzenia pull request: ${response.statusCode}',
+      response.statusCode,
+    );
+  }
+
+  Future<GhPullRequest> updatePullRequest({
+    required String owner,
+    required String repo,
+    required int number,
+    required String token,
+    String? title,
+    String? body,
+    String? state,
+    String? head,
+    String? base,
+  }) async {
+    final uri = Uri.parse('$_baseUrl/repos/$owner/$repo/pulls/$number');
+    final bodyMap = <String, dynamic>{
+      if (title != null) 'title': title,
+      if (body != null) 'body': body,
+      if (state != null) 'state': state,
+      if (head != null) 'head': head,
+      if (base != null) 'base': base,
+    };
+    final response = await http.patch(
+      uri,
+      headers: _headers(token),
+      body: jsonEncode(bodyMap),
+    );
+    if (response.statusCode == 200) {
+      return GhPullRequest.fromJson(
+        jsonDecode(response.body) as Map<String, dynamic>,
+      );
+    }
+    throw GithubApiException(
+      'Błąd aktualizacji pull request: ${response.statusCode}',
+      response.statusCode,
+    );
+  }
+
+  Future<List<GhIssueComment>> getPullRequestComments({
+    required String owner,
+    required String repo,
+    required int number,
+    required String token,
+    int page = 1,
+  }) async {
+    final uri = Uri.parse(
+      '$_baseUrl/repos/$owner/$repo/pulls/$number/comments',
+    ).replace(queryParameters: {'per_page': '30', 'page': '$page'});
+    final response = await http.get(uri, headers: _headers(token));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as List<dynamic>;
+      return data
+          .map((c) => GhIssueComment.fromJson(c as Map<String, dynamic>))
+          .toList();
+    }
+    throw GithubApiException(
+      'Błąd ładowania komentarzy PR: ${response.statusCode}',
       response.statusCode,
     );
   }

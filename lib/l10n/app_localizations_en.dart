@@ -1058,6 +1058,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get navigationIssues => 'Issues';
 
   @override
+  String get navigationPullRequests => 'Pull Requests';
+
+  @override
   String get labelIssues => 'Issues';
 
   @override

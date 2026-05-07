@@ -364,6 +364,7 @@
   "calcModeInterval": "Przedział",
 
   "navigationIssues": "Issues",
+  "navigationPullRequests": "Pull Requests",
   "labelIssues": "Issues",
   "labelComments": "Komentarze",
   "labelLabels": "Etykiety",

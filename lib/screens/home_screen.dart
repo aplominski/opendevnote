@@ -44,7 +44,10 @@ import 'package:opendevnote/screens/rss_page.dart';
 import 'package:opendevnote/screens/settings_page.dart';
 import 'package:opendevnote/screens/issues_page.dart';
 import 'package:opendevnote/screens/issue_detail_page.dart';
+import 'package:opendevnote/screens/pull_requests_page.dart';
+import 'package:opendevnote/screens/pull_request_detail_page.dart';
 import 'package:opendevnote/providers/issues_provider.dart';
+import 'package:opendevnote/providers/pull_requests_provider.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -232,6 +235,16 @@ class _ContentArea extends ConsumerWidget {
           );
         }
         return const IssuesPage();
+      case NavSection.pullRequests:
+        final selectedPrNumber = ref.watch(selectedPrNumberProvider);
+        final selectedPrRepo = ref.watch(selectedPrRepoProvider);
+        if (selectedPrNumber != null && selectedPrRepo != null) {
+          return PullRequestDetailPage(
+            repoKey: selectedPrRepo,
+            prNumber: selectedPrNumber,
+          );
+        }
+        return const PullRequestsPage();
       case NavSection.workflows:
         if (selectedWorkflowRepo != null) {
           return const WorkflowRepoDetailPage();

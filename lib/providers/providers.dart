@@ -45,6 +45,7 @@ enum NavSection {
   calculator,
   repositories,
   issues,
+  pullRequests,
   workflows,
   projects,
   workTime,

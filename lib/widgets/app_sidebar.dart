@@ -166,6 +166,20 @@ class AppSidebar extends ConsumerWidget {
               },
             ),
             _SidebarItem(
+              icon: Icons.merge_type,
+              label: l10n.navigationPullRequests,
+              isSelected: navSection == NavSection.pullRequests,
+              onTap: () {
+                ref.read(navSectionProvider.notifier).state =
+                    NavSection.pullRequests;
+                ref.read(selectedProjectIdProvider.notifier).state = null;
+                ref.read(selectedSnippetIdProvider.notifier).state = null;
+                ref.read(selectedSnippetProjectIdProvider.notifier).state =
+                    null;
+                onNavigate?.call();
+              },
+            ),
+            _SidebarItem(
               icon: Icons.rocket_launch_outlined,
               label: 'CI/CD Workflows',
               isSelected: navSection == NavSection.workflows,

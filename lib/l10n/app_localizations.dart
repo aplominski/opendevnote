@@ -2114,6 +2114,12 @@ abstract class AppLocalizations {
   /// **'Issues'**
   String get navigationIssues;
 
+  /// No description provided for @navigationPullRequests.
+  ///
+  /// In pl, this message translates to:
+  /// **'Pull Requests'**
+  String get navigationPullRequests;
+
   /// No description provided for @labelIssues.
   ///
   /// In pl, this message translates to:
