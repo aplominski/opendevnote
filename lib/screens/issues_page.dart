@@ -118,6 +118,7 @@ class _IssuesPageState extends ConsumerState<IssuesPage> {
           repoFilter: _repoFilter,
           onRepoChanged: (r) => setState(() => _repoFilter = r),
           repoNames: repoNames,
+          l10n: l10n,
         ),
         Expanded(
           child: issues.isEmpty && !issuesState.isLoading
@@ -176,6 +177,7 @@ class _IssueFilterBar extends StatelessWidget {
   final String? repoFilter;
   final void Function(String?) onRepoChanged;
   final List<String> repoNames;
+  final AppLocalizations l10n;
 
   const _IssueFilterBar({
     required this.searchQuery,
@@ -185,6 +187,7 @@ class _IssueFilterBar extends StatelessWidget {
     required this.repoFilter,
     required this.onRepoChanged,
     required this.repoNames,
+    required this.l10n,
   });
 
   @override
@@ -233,19 +236,19 @@ class _IssueFilterBar extends StatelessWidget {
           Row(
             children: [
               _FilterChip(
-                label: 'All',
+                label: l10n.statusAll,
                 selected: stateFilter == IssueStateFilter.all,
                 onTap: () => onStateChanged(IssueStateFilter.all),
               ),
               const SizedBox(width: 4),
               _FilterChip(
-                label: 'Open',
+                label: l10n.statusOpen,
                 selected: stateFilter == IssueStateFilter.open,
                 onTap: () => onStateChanged(IssueStateFilter.open),
               ),
               const SizedBox(width: 4),
               _FilterChip(
-                label: 'Closed',
+                label: l10n.statusClosed,
                 selected: stateFilter == IssueStateFilter.closed,
                 onTap: () => onStateChanged(IssueStateFilter.closed),
               ),
@@ -277,7 +280,7 @@ class _IssueFilterBar extends StatelessWidget {
                     child: DropdownButton<String>(
                       value: repoFilter,
                       hint: Text(
-                        'Repo',
+                        l10n.labelRepo,
                         style: textTheme.bodySmall?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),

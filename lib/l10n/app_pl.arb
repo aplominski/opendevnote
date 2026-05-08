@@ -386,5 +386,16 @@
   "buttonOpenOnGitHub": "Otwórz na GitHub",
   "tooltipNewIssue": "Nowy issue",
   "statusOpen": "Otwarty",
-  "statusClosed": "Zamknięty"
+  "statusClosed": "Zamknięty",
+  "statusMerged": "Zmerge'owany",
+  "emptyStateNoPullRequests": "Brak pull requestów",
+  "emptyStateNoPullRequestsHint": "Pull requesty pojawią się tutaj",
+  "labelRepo": "Repozytorium",
+  "tooltipCreatePullRequest": "Utwórz pull request",
+  "labelDraft": "Szkic",
+  "labelHeadBranch": "Gałąź źródłowa",
+  "labelBaseBranch": "Gałąź docelowa",
+  "placeholderPullRequestTitle": "Wpisz tytuł PR",
+  "placeholderPullRequestBody": "Wpisz opis PR (opcjonalnie)",
+  "navigationWorkflows": "Workflowy CI/CD"
 }

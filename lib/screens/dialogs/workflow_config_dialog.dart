@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:opendevnote/l10n/app_localizations.dart';
 import 'package:opendevnote/models/github_account.dart';
 import 'package:opendevnote/providers/workflow_provider.dart';
 
@@ -27,13 +28,14 @@ class _GithubSettingsDialogState extends ConsumerState<GithubSettingsDialog> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
     final allAccounts = ref.watch(githubAccountsProvider);
 
     final seenIds = <String>{};
     final accounts = allAccounts.where((a) => seenIds.add(a.id)).toList();
 
     return AlertDialog(
-      title: const Text('Konta GitHub'),
+      title: Text(l10n.dialogGitHubAccounts),
       content: SizedBox(
         width: 460,
         child: SingleChildScrollView(
@@ -44,7 +46,7 @@ class _GithubSettingsDialogState extends ConsumerState<GithubSettingsDialog> {
               // Existing accounts
               if (accounts.isNotEmpty) ...[
                 Text(
-                  'Twoje konta',
+                  l10n.labelYourAccounts,
                   style: textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: colorScheme.onSurfaceVariant,
@@ -67,7 +69,7 @@ class _GithubSettingsDialogState extends ConsumerState<GithubSettingsDialog> {
               ],
               // Add new account
               Text(
-                'Dodaj konto',
+                l10n.labelAddAccount,
                 style: textTheme.bodySmall?.copyWith(
                   fontWeight: FontWeight.w600,
                   color: colorScheme.onSurfaceVariant,
@@ -107,12 +109,12 @@ class _GithubSettingsDialogState extends ConsumerState<GithubSettingsDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Zamknij'),
+          child: Text(l10n.buttonClose),
         ),
         FilledButton.icon(
           onPressed: _addAccount,
           icon: const Icon(Icons.add, size: 18),
-          label: const Text('Dodaj konto'),
+          label: Text(l10n.labelAddAccount),
         ),
       ],
     );

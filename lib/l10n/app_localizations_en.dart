@@ -1125,4 +1125,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statusClosed => 'Closed';
+
+  @override
+  String get statusMerged => 'Merged';
+
+  @override
+  String get emptyStateNoPullRequests => 'No pull requests';
+
+  @override
+  String get emptyStateNoPullRequestsHint => 'Pull requests will appear here';
+
+  @override
+  String get labelRepo => 'Repo';
+
+  @override
+  String get tooltipCreatePullRequest => 'Create pull request';
+
+  @override
+  String get labelDraft => 'Draft';
+
+  @override
+  String get labelHeadBranch => 'Head branch';
+
+  @override
+  String get labelBaseBranch => 'Base branch';
+
+  @override
+  String get placeholderPullRequestTitle => 'Enter PR title';
+
+  @override
+  String get placeholderPullRequestBody => 'Enter PR description (optional)';
+
+  @override
+  String get navigationWorkflows => 'CI/CD Workflows';
 }

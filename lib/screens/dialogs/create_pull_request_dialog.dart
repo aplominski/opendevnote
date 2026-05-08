@@ -57,7 +57,7 @@ class _CreatePullRequestDialogState
     final l10n = AppLocalizations.of(context)!;
 
     return AlertDialog(
-      title: Text('Create Pull Request'),
+      title: Text(l10n.tooltipCreatePullRequest),
       content: SizedBox(
         width: 500,
         child: SingleChildScrollView(
@@ -67,18 +67,18 @@ class _CreatePullRequestDialogState
             children: [
               TextField(
                 controller: _titleController,
-                decoration: const InputDecoration(
-                  labelText: 'Title',
-                  hintText: 'Enter PR title',
+                decoration: InputDecoration(
+                  labelText: l10n.labelTitle,
+                  hintText: l10n.placeholderPullRequestTitle,
                 ),
                 autofocus: true,
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _bodyController,
-                decoration: const InputDecoration(
-                  labelText: 'Description',
-                  hintText: 'Enter PR description (optional)',
+                decoration: InputDecoration(
+                  labelText: l10n.labelDescription,
+                  hintText: l10n.placeholderPullRequestBody,
                 ),
                 maxLines: 4,
               ),
@@ -88,8 +88,8 @@ class _CreatePullRequestDialogState
                   Expanded(
                     child: DropdownButtonFormField<String>(
                       initialValue: _selectedHead,
-                      decoration: const InputDecoration(
-                        labelText: 'Head branch',
+                      decoration: InputDecoration(
+                        labelText: l10n.labelHeadBranch,
                       ),
                       items: _branches
                           .map(
@@ -109,8 +109,8 @@ class _CreatePullRequestDialogState
                   Expanded(
                     child: DropdownButtonFormField<String>(
                       initialValue: _selectedBase,
-                      decoration: const InputDecoration(
-                        labelText: 'Base branch',
+                      decoration: InputDecoration(
+                        labelText: l10n.labelBaseBranch,
                       ),
                       items: _branches
                           .map(
@@ -133,7 +133,7 @@ class _CreatePullRequestDialogState
                     onChanged: (v) => setState(() => _isDraft = v ?? false),
                   ),
                   const SizedBox(width: 8),
-                  const Text('Create as draft'),
+                  Text(l10n.labelDraft),
                 ],
               ),
             ],

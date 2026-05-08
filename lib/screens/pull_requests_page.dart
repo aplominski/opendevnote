@@ -142,21 +142,21 @@ class _PullRequestsPageState extends ConsumerState<PullRequestsPage> {
                 value: _stateFilter,
                 underline: const SizedBox(),
                 items: [
-                  const DropdownMenuItem(
+                  DropdownMenuItem(
                     value: PrStateFilter.all,
-                    child: Text('All'),
+                    child: Text(l10n.statusAll),
                   ),
-                  const DropdownMenuItem(
+                  DropdownMenuItem(
                     value: PrStateFilter.open,
-                    child: Text('Open'),
+                    child: Text(l10n.statusOpen),
                   ),
-                  const DropdownMenuItem(
+                  DropdownMenuItem(
                     value: PrStateFilter.closed,
-                    child: Text('Closed'),
+                    child: Text(l10n.statusClosed),
                   ),
-                  const DropdownMenuItem(
+                  DropdownMenuItem(
                     value: PrStateFilter.merged,
-                    child: Text('Merged'),
+                    child: Text(l10n.statusMerged),
                   ),
                 ],
                 onChanged: (v) => setState(() => _stateFilter = v!),
@@ -165,10 +165,10 @@ class _PullRequestsPageState extends ConsumerState<PullRequestsPage> {
               if (repoNames.isNotEmpty)
                 DropdownButton<String?>(
                   value: _repoFilter,
-                  hint: const Text('Repo'),
+                  hint: Text(l10n.labelRepo),
                   underline: const SizedBox(),
                   items: [
-                    const DropdownMenuItem(value: null, child: Text('All')),
+                    DropdownMenuItem(value: null, child: Text(l10n.statusAll)),
                     ...repoNames.map(
                       (r) => DropdownMenuItem(value: r, child: Text(r)),
                     ),
@@ -180,9 +180,9 @@ class _PullRequestsPageState extends ConsumerState<PullRequestsPage> {
         ),
         Expanded(
           child: prs.isEmpty
-              ? const EmptyState(
-                  title: 'No pull requests',
-                  subtitle: 'Pull requests will appear here',
+              ? EmptyState(
+                  title: l10n.emptyStateNoPullRequests,
+                  subtitle: l10n.emptyStateNoPullRequestsHint,
                 )
               : ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 16),

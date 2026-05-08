@@ -388,5 +388,16 @@
   "buttonOpenOnGitHub": "Open on GitHub",
   "tooltipNewIssue": "New issue",
   "statusOpen": "Open",
-  "statusClosed": "Closed"
+  "statusClosed": "Closed",
+  "statusMerged": "Merged",
+  "emptyStateNoPullRequests": "No pull requests",
+  "emptyStateNoPullRequestsHint": "Pull requests will appear here",
+  "labelRepo": "Repo",
+  "tooltipCreatePullRequest": "Create pull request",
+  "labelDraft": "Draft",
+  "labelHeadBranch": "Head branch",
+  "labelBaseBranch": "Base branch",
+  "placeholderPullRequestTitle": "Enter PR title",
+  "placeholderPullRequestBody": "Enter PR description (optional)",
+  "navigationWorkflows": "CI/CD Workflows"
 }

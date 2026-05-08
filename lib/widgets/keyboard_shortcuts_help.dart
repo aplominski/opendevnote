@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:opendevnote/l10n/app_localizations.dart';
 
 class KeyboardShortcutsHelp extends StatelessWidget {
   const KeyboardShortcutsHelp({super.key});
@@ -8,6 +9,7 @@ class KeyboardShortcutsHelp extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Material(
       color: Colors.black54,
@@ -42,7 +44,10 @@ class KeyboardShortcutsHelp extends StatelessWidget {
                       children: [
                         Icon(Icons.keyboard, color: colorScheme.primary),
                         const SizedBox(width: 12),
-                        Text('Skróty klawiszowe', style: textTheme.titleLarge),
+                        Text(
+                          l10n.dialogKeyboardShortcuts,
+                          style: textTheme.titleLarge,
+                        ),
                         const Spacer(),
                         IconButton(
                           icon: const Icon(Icons.close),
@@ -71,30 +76,30 @@ class KeyboardShortcutsHelp extends StatelessWidget {
                           description: 'Pokaż/ukryj pomoc skrótów',
                         ),
                         const SizedBox(height: 12),
-              _ShortcutRow(
-                keys: 'Ctrl + P',
-                description: 'Wyszukaj notatki (command bar)',
-              ),
-              const SizedBox(height: 12),
-              _ShortcutRow(
-                keys: 'Ctrl + E',
-                description: 'Nowe wydarzenie w kalendarzu',
-              ),
-              const SizedBox(height: 12),
-              _ShortcutRow(
-                keys: 'Ctrl + Scroll',
-                description: 'Przybliż/oddal widok kalendarza',
-              ),
-              const SizedBox(height: 12),
-              _ShortcutRow(
-                keys: '← / →',
-                description: 'Nawigacja miesiąc / tydzień',
-              ),
-              const SizedBox(height: 12),
-              _ShortcutRow(
-                keys: 'Ctrl + ← / →',
-                description: 'Nawigacja dzień',
-              ),
+                        _ShortcutRow(
+                          keys: 'Ctrl + P',
+                          description: 'Wyszukaj notatki (command bar)',
+                        ),
+                        const SizedBox(height: 12),
+                        _ShortcutRow(
+                          keys: 'Ctrl + E',
+                          description: 'Nowe wydarzenie w kalendarzu',
+                        ),
+                        const SizedBox(height: 12),
+                        _ShortcutRow(
+                          keys: 'Ctrl + Scroll',
+                          description: 'Przybliż/oddal widok kalendarza',
+                        ),
+                        const SizedBox(height: 12),
+                        _ShortcutRow(
+                          keys: '← / →',
+                          description: 'Nawigacja miesiąc / tydzień',
+                        ),
+                        const SizedBox(height: 12),
+                        _ShortcutRow(
+                          keys: 'Ctrl + ← / →',
+                          description: 'Nawigacja dzień',
+                        ),
                       ],
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:opendevnote/l10n/app_localizations.dart';
 
 class FileDiffDialog extends StatelessWidget {
   final String filename;
@@ -20,6 +21,7 @@ class FileDiffDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return AlertDialog(
       title: Row(
@@ -91,7 +93,7 @@ class FileDiffDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Zamknij'),
+          child: Text(l10n.buttonClose),
         ),
       ],
     );

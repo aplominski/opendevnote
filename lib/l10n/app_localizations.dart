@@ -2251,6 +2251,72 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Zamknięty'**
   String get statusClosed;
+
+  /// No description provided for @statusMerged.
+  ///
+  /// In pl, this message translates to:
+  /// **'Zmerge\'owany'**
+  String get statusMerged;
+
+  /// No description provided for @emptyStateNoPullRequests.
+  ///
+  /// In pl, this message translates to:
+  /// **'Brak pull requestów'**
+  String get emptyStateNoPullRequests;
+
+  /// No description provided for @emptyStateNoPullRequestsHint.
+  ///
+  /// In pl, this message translates to:
+  /// **'Pull requesty pojawią się tutaj'**
+  String get emptyStateNoPullRequestsHint;
+
+  /// No description provided for @labelRepo.
+  ///
+  /// In pl, this message translates to:
+  /// **'Repozytorium'**
+  String get labelRepo;
+
+  /// No description provided for @tooltipCreatePullRequest.
+  ///
+  /// In pl, this message translates to:
+  /// **'Utwórz pull request'**
+  String get tooltipCreatePullRequest;
+
+  /// No description provided for @labelDraft.
+  ///
+  /// In pl, this message translates to:
+  /// **'Szkic'**
+  String get labelDraft;
+
+  /// No description provided for @labelHeadBranch.
+  ///
+  /// In pl, this message translates to:
+  /// **'Gałąź źródłowa'**
+  String get labelHeadBranch;
+
+  /// No description provided for @labelBaseBranch.
+  ///
+  /// In pl, this message translates to:
+  /// **'Gałąź docelowa'**
+  String get labelBaseBranch;
+
+  /// No description provided for @placeholderPullRequestTitle.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wpisz tytuł PR'**
+  String get placeholderPullRequestTitle;
+
+  /// No description provided for @placeholderPullRequestBody.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wpisz opis PR (opcjonalnie)'**
+  String get placeholderPullRequestBody;
+
+  /// No description provided for @navigationWorkflows.
+  ///
+  /// In pl, this message translates to:
+  /// **'Workflowy CI/CD'**
+  String get navigationWorkflows;
 }
 
 class _AppLocalizationsDelegate

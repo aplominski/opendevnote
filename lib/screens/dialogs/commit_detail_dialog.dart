@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:opendevnote/l10n/app_localizations.dart';
 import 'package:opendevnote/models/gh_commit_detail.dart';
 import 'package:opendevnote/providers/workflow_provider.dart';
 import 'package:opendevnote/screens/file_diff_page.dart';
@@ -75,6 +76,7 @@ class _CommitDetailDialogState extends ConsumerState<CommitDetailDialog> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return AlertDialog(
       title: Row(
@@ -95,7 +97,7 @@ class _CommitDetailDialogState extends ConsumerState<CommitDetailDialog> {
           ),
           const SizedBox(width: 10),
           Expanded(
-            child: Text('Szczegóły commita', style: textTheme.titleMedium),
+            child: Text(l10n.dialogCommitDetails, style: textTheme.titleMedium),
           ),
         ],
       ),
@@ -121,7 +123,7 @@ class _CommitDetailDialogState extends ConsumerState<CommitDetailDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Zamknij'),
+          child: Text(l10n.buttonClose),
         ),
       ],
     );

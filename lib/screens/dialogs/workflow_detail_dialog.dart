@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:opendevnote/l10n/app_localizations.dart';
 import 'package:opendevnote/models/workflow_job.dart';
 import 'package:opendevnote/models/workflow_run.dart';
 import 'package:opendevnote/providers/workflow_provider.dart';
@@ -60,6 +61,7 @@ class _WorkflowDetailDialogState extends ConsumerState<WorkflowDetailDialog> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    final l10n = AppLocalizations.of(context)!;
     final run = widget.run;
 
     return AlertDialog(
@@ -84,16 +86,22 @@ class _WorkflowDetailDialogState extends ConsumerState<WorkflowDetailDialog> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Run info
-              _InfoRow(label: 'Repo', value: '${widget.owner}/${widget.repo}'),
-              _InfoRow(label: 'Branch', value: run.headBranch ?? '-'),
+              _InfoRow(
+                label: l10n.labelRepo,
+                value: '${widget.owner}/${widget.repo}',
+              ),
+              _InfoRow(label: l10n.labelBranches, value: run.headBranch ?? '-'),
               _InfoRow(label: 'Workflow', value: run.name ?? '-'),
               _InfoRow(label: 'Run #', value: '${run.runNumber}'),
-              _InfoRow(label: 'Status', value: _statusLabel(run)),
+              _InfoRow(label: l10n.labelStatus, value: _statusLabel(run, l10n)),
               if (run.actorLogin != null)
-                _InfoRow(label: 'Actor', value: run.actorLogin!),
+                _InfoRow(label: l10n.labelAuthor, value: run.actorLogin!),
               if (run.event != null)
                 _InfoRow(label: 'Event', value: run.event!),
-              _InfoRow(label: 'Utworzono', value: _formatDate(run.createdAt)),
+              _InfoRow(
+                label: l10n.labelCreated,
+                value: _formatDate(run.createdAt),
+              ),
               if (run.commitMessage != null)
                 _InfoRow(
                   label: 'Commit',
@@ -146,18 +154,18 @@ class _WorkflowDetailDialogState extends ConsumerState<WorkflowDetailDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Zamknij'),
+          child: Text(l10n.buttonClose),
         ),
       ],
     );
   }
 
-  String _statusLabel(WorkflowRun run) {
-    if (run.isInProgress) return 'W trakcie';
-    if (run.isSuccess) return 'Sukces';
-    if (run.conclusion == 'failure') return 'Niepowodzenie';
-    if (run.conclusion == 'cancelled') return 'Anulowany';
-    if (run.conclusion == 'timed_out') return 'Timeout';
+  String _statusLabel(WorkflowRun run, AppLocalizations l10n) {
+    if (run.isInProgress) return l10n.statusInProgress;
+    if (run.isSuccess) return l10n.statusSuccess;
+    if (run.conclusion == 'failure') return l10n.statusFailure;
+    if (run.conclusion == 'cancelled') return l10n.statusCancelled;
+    if (run.conclusion == 'timed_out') return l10n.statusTimeout;
     return run.conclusion ?? run.status ?? '-';
   }
 

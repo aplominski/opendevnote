@@ -181,7 +181,7 @@ class AppSidebar extends ConsumerWidget {
             ),
             _SidebarItem(
               icon: Icons.rocket_launch_outlined,
-              label: 'CI/CD Workflows',
+              label: l10n.navigationWorkflows,
               isSelected: navSection == NavSection.workflows,
               onTap: () {
                 ref.read(navSectionProvider.notifier).state =
